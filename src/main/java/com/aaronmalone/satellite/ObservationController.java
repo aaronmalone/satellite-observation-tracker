@@ -15,7 +15,7 @@ public class ObservationController {
   @Autowired
   private ObservationRepository observationRepository;
 
-  @PostMapping(path = "/observation")
+  @PostMapping(path = "/api/observation")
   public ResponseEntity<?> recordObservation(@RequestBody Observation observation) {
     if (observation.checkValidity()) {
       observation.ensureThatTimeFieldIsPopulated();
@@ -26,7 +26,7 @@ public class ObservationController {
     }
   }
 
-  @GetMapping(path = "/observation")
+  @GetMapping(path = "/api/observation")
   public ResponseEntity<List<Observation>> allObservations() {
     List<Observation> all = observationRepository.findAll();
     return ResponseEntity.ok(all);

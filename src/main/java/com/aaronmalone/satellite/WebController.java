@@ -11,7 +11,7 @@ public class WebController {
   @Autowired
   private ObservationRepository observationRepository;
 
-  @GetMapping(path = "/todo-rename-me-obs")
+  @GetMapping(path = "/observations")
   public ModelAndView allObservations() {
     ModelAndView mav = new ModelAndView("all-observations");
     mav.addObject("observations", observationRepository.findAll());
