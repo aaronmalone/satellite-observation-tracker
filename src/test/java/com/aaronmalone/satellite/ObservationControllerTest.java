@@ -1,39 +1,42 @@
 package com.aaronmalone.satellite;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class ObservationControllerTest {
 
-  @LocalServerPort
-  private int port;
+  @Autowired
+  private MockMvc mockMvc;
 
   @Autowired
-  private TestRestTemplate restTemplate;
+  private ObjectMapper objectMapper;
 
   @Test
-  public void testObservationsRouteReturnsListOfObservations() {
-    String url = "http://localhost:" + port + "/api/observation";
-    ParameterizedTypeReference<List<Observation>> responseType =
-            new ParameterizedTypeReference<List<Observation>>() {
-            };
+  public void testObservationsRouteReturnsListOfObservations() throws Exception {
 
-    ResponseEntity<List<Observation>> response = restTemplate.exchange(url, HttpMethod.GET, null, responseType);
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    List<Observation> observations = response.getBody();
-    assertNotNull(observations);
+    MvcResult mvcResult = mockMvc
+            .perform(get("/api/observation"))
+            .andExpect(status().isOk())
+            .andReturn();
+
+    String json = mvcResult.getResponse().getContentAsString();
+    TypeReference<List<Observation>> listOfObservation = new TypeReference<List<Observation>>() {
+    };
+    List<Observation> observations = objectMapper.readValue(json, listOfObservation);
+    assertFalse(observations.isEmpty());
   }
 }
