@@ -9,10 +9,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -38,5 +43,26 @@ public class ObservationControllerTest {
     };
     List<Observation> observations = objectMapper.readValue(json, listOfObservation);
     assertFalse(observations.isEmpty());
+  }
+
+  @Test
+  public void testPostObservation() throws Exception {
+    Map<String, String> postContent = new HashMap<>();
+    postContent.put("name", "HST");
+    postContent.put("notes", "bright!");
+
+    MvcResult mvcResult = mockMvc
+            .perform(
+                    post("/api/observation")
+                            .content(objectMapper.writeValueAsString(postContent))
+                            .contentType("application/json"))
+            .andExpect(status().isCreated())
+            .andReturn();
+
+    String json = mvcResult.getResponse().getContentAsString();
+    Observation created = objectMapper.readValue(json, Observation.class);
+    assertNotNull(created.getId());
+    assertNotNull(created.getTime());
+    assertEquals("HST", created.getName());
   }
 }
