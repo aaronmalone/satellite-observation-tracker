@@ -22,7 +22,7 @@ public class ObservationController {
       Observation saved = observationRepository.save(observation);
       return ResponseEntity.created(null).body(saved);
     } else {
-      return ResponseEntity.unprocessableEntity().body("Name, catalog number, or COSPAR ID must be provided");
+      return ResponseEntity.unprocessableEntity().body("Name or COSPAR ID must be provided");
     }
   }
 

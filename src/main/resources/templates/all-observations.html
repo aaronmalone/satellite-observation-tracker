@@ -14,8 +14,8 @@
             </thead>
             <tbody>
                 <tr th:each="obs : ${observations}">
-                    <td th:text="${obs.time}"></td>
-                    <td th:text="${obs.name + ' ' + obs.catalogNumber + ' ' + obs.cosparId}"></td>
+                    <td th:text="${#dates.format(obs.time, 'yyyy-MM-dd HH:mm')}"></td>
+                    <td th:text="${obs.name + ' ' + obs.cosparId}"></td>
                     <td th:text="${obs.notes}"></td>
                 </tr>
             </tbody>

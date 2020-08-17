@@ -17,11 +17,6 @@ public class Observation {
   public String name;
 
   /**
-   * Space Track catalog number
-   */
-  public Integer catalogNumber;
-
-  /**
    * COSPAR ID (see https://en.wikipedia.org/wiki/COSPAR_designation)
    */
   public String cosparId;
@@ -39,10 +34,9 @@ public class Observation {
   public boolean checkValidity() {
     //TODO: replace boolean method with validate() that throws exception
     /*
-     * To be valid, at least one of name, catalogNumber, or cosparId
-     * must be provided.
+     * To be valid, name or COSPAR ID must be provided.
      */
-    return name != null || catalogNumber != null || cosparId != null;
+    return name != null || cosparId != null;
   }
 
   public void ensureThatTimeFieldIsPopulated() {
