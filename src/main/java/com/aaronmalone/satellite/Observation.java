@@ -1,6 +1,8 @@
 package com.aaronmalone.satellite;
 
-public class RecordSatelliteObservation {
+import java.time.Instant;
+
+public class Observation {
   /**
    * Space Track name
    */
@@ -19,9 +21,15 @@ public class RecordSatelliteObservation {
   /**
    * Time of observation
    */
-  private String timestamp;
+  private Instant time;
 
-  public boolean isValid() {
+  /**
+   * Any additional notes about observation
+   */
+  private String notes;
+
+  public boolean checkValidity() {
+    //TODO: replace boolean method with validate() that throws exception
     /*
      * To be valid, at least one of name, catalogNumber, or cosparId
      * must be provided.
@@ -53,11 +61,27 @@ public class RecordSatelliteObservation {
     this.cosparId = cosparId;
   }
 
-  public String getTimestamp() {
-    return timestamp;
+  public Instant getTime() {
+    return time;
   }
 
-  public void setTimestamp(String timestamp) {
-    this.timestamp = timestamp;
+  public void setTime(Instant time) {
+    this.time = time;
+  }
+
+  public String getNotes() {
+    return notes;
+  }
+
+  public void setNotes(String notes) {
+    this.notes = notes;
+  }
+
+  //todo remove getters and setters with lombok
+
+  public void ensureThatTimeFieldIsPopulated() {
+    if (this.time == null) {
+      this.time = Instant.now();
+    }
   }
 }
