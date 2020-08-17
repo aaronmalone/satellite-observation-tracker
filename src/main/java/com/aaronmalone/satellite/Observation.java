@@ -1,9 +1,11 @@
 package com.aaronmalone.satellite;
 
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 
 import java.time.Instant;
 
+@Data
 public class Observation {
 
   @Id

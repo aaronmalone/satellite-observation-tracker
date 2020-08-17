@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+    </head>
+    <body>
+        <h2>All Observations</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Satellite</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="obs : ${observations}">
+                    <td th:text="${obs.time}"></td>
+                    <td th:text="${obs.name + ' ' + obs.catalogNumber + ' ' + obs.cosparId}"></td>
+                    <td th:text="${obs.notes}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
