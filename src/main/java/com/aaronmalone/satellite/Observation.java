@@ -30,18 +30,4 @@ public class Observation {
    * Any additional notes about observation
    */
   public String notes;
-
-  public boolean checkValidity() {
-    //TODO: replace boolean method with validate() that throws exception
-    /*
-     * To be valid, name or COSPAR ID must be provided.
-     */
-    return name != null || cosparId != null;
-  }
-
-  public void ensureThatTimeFieldIsPopulated() {
-    if (this.time == null) {
-      this.time = Instant.now();
-    }
-  }
 }
