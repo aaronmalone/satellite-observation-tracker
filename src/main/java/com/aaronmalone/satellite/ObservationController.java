@@ -3,6 +3,7 @@ package com.aaronmalone.satellite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,8 +40,12 @@ public class ObservationController {
   }
 
   @GetMapping(path = "/api/observation")
-  public ResponseEntity<List<Observation>> allObservations() {
-    List<Observation> all = observationRepository.findAll();
-    return ResponseEntity.ok(all);
+  public List<Observation> allObservations() {
+    return observationRepository.findAll();
+  }
+
+  @GetMapping(path = "/api/observation/{id}")
+  public Observation findObservation(@PathVariable String id) {
+    return observationRepository.findById(id).orElse(null);
   }
 }
