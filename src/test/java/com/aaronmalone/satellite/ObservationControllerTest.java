@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +56,9 @@ public class ObservationControllerTest {
             .perform(
                     post("/api/observation")
                             .content(objectMapper.writeValueAsString(postContent))
-                            .contentType("application/json"))
+                            .contentType("application/json")
+                            .header("Authorization", getAuthorizationHeaderValue())
+            )
             .andExpect(status().isCreated())
             .andReturn();
 
@@ -64,5 +67,13 @@ public class ObservationControllerTest {
     assertNotNull(created.getId());
     assertNotNull(created.getTime());
     assertEquals("HST", created.getName());
+  }
+
+  private Object getAuthorizationHeaderValue() {
+    String username = "observer";
+    String password = "pazzw0rd";
+    String concatenated = username + ":" + password;
+    String encoded = Base64.getEncoder().encodeToString(concatenated.getBytes());
+    return "Basic " + encoded;
   }
 }
