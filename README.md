@@ -4,7 +4,7 @@ One of the hobbies that I enjoyed during the relative isolation of the COVID-19 
 
 There are plenty of websites that will help you identify the satellites you have seen or show you where to look for a satellite as it passes overhead, but I am not aware of tools for recording observations and keeping track of them. I have just used a text file for that purpose and it has worked well for me. This application is the _start_ of a tool for recording and tracking observations. I worked on this application as part of my interviewing process when I was interviewing for a software engineering position at [Rhove](https://www.rhove.com/), where I would go on to work until August of 2021.
 
-The web interface is a bit anemic -- it just shows a (poorly-formatted) list of recorded observations. I've never been particularly interested in web development. My aim was to demonstrate competence in backend development and the ability to work with the frameworks prescribed.
+The web interface is a bit anemic: it just shows a (poorly-formatted) list of recorded observations. I've never been particularly interested in web development. My aim was to demonstrate competence in backend development and the ability to work with the frameworks prescribed.
 
 The REST API has more features. You can list observations, `POST` a new observation, and search for observations by satellite name or COSPAR ID.
 
